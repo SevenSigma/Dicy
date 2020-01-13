@@ -14,6 +14,8 @@ struct ContentView: View {
     @State var results:[Int] = []
     @State var addToggleIsPressed:Bool = false
     @State var isResultsEmpty:Bool = true
+    @State var diceFormula:String = ""
+    @State var resultString:String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -31,6 +33,7 @@ struct ContentView: View {
                             self.results = [quickRollDice(sides: 4)]
                         }
                         self.isResultsEmpty = false
+                        self.resultString = "\(self.results.description) = \(self.results.reduce(0,+))"
                     }) {
                         Image("d4")
                     }
@@ -41,7 +44,7 @@ struct ContentView: View {
                             self.results = [quickRollDice(sides: 6)]
                         }
                         self.isResultsEmpty = false
-                            
+                        self.resultString = "\(self.results.description) = \(self.results.reduce(0,+))"
                         }) {
                             Image("d6")
                         }
@@ -52,6 +55,7 @@ struct ContentView: View {
                             self.results = [quickRollDice(sides: 8)]
                         }
                         self.isResultsEmpty = false
+                        self.resultString = "\(self.results.description) = \(self.results.reduce(0,+))"
                     }) {
                         Image("d8")
                     }
@@ -66,6 +70,7 @@ struct ContentView: View {
                             self.results = [quickRollDice(sides: 10)]
                         }
                         self.isResultsEmpty = false
+                        self.resultString = "\(self.results.description) = \(self.results.reduce(0,+))"
                     }) {
                     Image("d10")
                     }
@@ -76,6 +81,7 @@ struct ContentView: View {
                             self.results = [quickRollDice(sides: 12)]
                         }
                         self.isResultsEmpty = false
+                        self.resultString = "\(self.results.description) = \(self.results.reduce(0,+))"
                     }) {
                         Image("d12")
                     }
@@ -86,6 +92,7 @@ struct ContentView: View {
                             self.results = [quickRollDice(sides: 20)]
                         }
                         self.isResultsEmpty = false
+                        self.resultString = "\(self.results.description) = \(self.results.reduce(0,+))"
                     }) {
                         Image("d20")
                     }
@@ -115,9 +122,11 @@ struct ContentView: View {
                         }
                     .padding(.trailing)
                         HStack {
-                            TextField("Try typing 3d6", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                                Text("Roll  ")
+                            TextField("Try typing 3d6", text: $diceFormula)
+                            Button(action: {
+                                self.resultString = parseDice(fromString: self.diceFormula)!
+                            }) {
+                                Text("Roll")
                                 }
                             .padding([.trailing])
                         }
@@ -131,11 +140,13 @@ struct ContentView: View {
                 }.buttonStyle(PlainButtonStyle())
                     HStack {
                         Spacer()
-                        Text("\(results.description) = \(results.reduce(0,+))")
+                        Text(resultString)
                             .font(.footnote)
                             .multilineTextAlignment(.center)
                             .foregroundColor(isResultsEmpty ? Color.gray : Color("TextColor"))
                             .opacity(isResultsEmpty ? 0 : 100)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .animation(Animation.spring().speed(5))
                         Spacer()
                     }
                     HStack {
