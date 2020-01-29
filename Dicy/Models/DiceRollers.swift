@@ -21,3 +21,8 @@ func rollDice (numberOfDice:Int, sides:Int) -> [Int] {
     }
         return results
 }
+
+func quickRollDice (sides:Int) -> Int {
+    let dieRoll = Int.random(in: 1...sides)
+    return dieRoll
+}

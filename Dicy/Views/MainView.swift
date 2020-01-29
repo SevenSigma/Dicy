@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-struct ContentView: View {
+struct MainView: View {
     
     @State var results:[Int] = []
     @State var addToggleIsPressed:Bool = false
@@ -24,6 +24,13 @@ struct ContentView: View {
                 .font(.subheadline)
                 .padding([.top, .leading])
             }.buttonStyle(PlainButtonStyle())
+            HStack {
+//                Spacer()
+                Toggle(isOn: $addToggleIsPressed) {
+                    Text("Add results")
+                }
+                .padding(.leading)
+            }
             VStack {
                 HStack {
                     Button(action: {
@@ -123,6 +130,7 @@ struct ContentView: View {
                     .padding(.trailing)
                         HStack {
                             TextField("Try typing 3d6", text: $diceFormula)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
                             Button(action: {
                                 self.resultString = parseDice(fromString: self.diceFormula)!
                             }) {
@@ -150,9 +158,6 @@ struct ContentView: View {
                         Spacer()
                     }
                     HStack {
-                        Toggle(isOn: $addToggleIsPressed) {
-                            Text("Add results")
-                        }
                         Spacer()
                         Button(action:{
                             self.results = []
@@ -178,13 +183,10 @@ struct QuickRollButtonStyle: ButtonStyle {
     }
 }
 
-func quickRollDice (sides:Int) -> Int {
-    let dieRoll = Int.random(in: 1...sides)
-    return dieRoll
-}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MainView()
     }
 }
