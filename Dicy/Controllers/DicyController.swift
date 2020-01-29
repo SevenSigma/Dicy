@@ -10,9 +10,11 @@ import Foundation
 import SwiftUI
 
 class DicyController: ObservableObject {
+    
     @Published var results:[Int] = []
     @Published var addToggleIsPressed:Bool = false
-    @Published var isResultsEmpty:Bool = true
+    @Published var isResultsEmpty:Bool = false
     @Published var diceFormula:String = ""
     @Published var resultString:String = ""
+    
 }
