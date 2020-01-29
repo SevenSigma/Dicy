@@ -9,7 +9,9 @@
 import Foundation
 class DiceParser:ObservableObject {
     
-    func parseDice (fromString: String) -> String? {
+    @Published var results:String = ""
+    
+    func parseDice (fromString: String) {
         
         // Starting variables
         let diceFormula = fromString
@@ -60,9 +62,9 @@ class DiceParser:ObservableObject {
         if resultString != "" && resultString != diceFormula {
             let result = NSExpression(format: resultString)
             print("The result math expression is \(result)")
-            return "\(detailedResultString) = \(result.expressionValue(with: nil, context: nil)!)"
+            results = "\(detailedResultString) = \(result.expressionValue(with: nil, context: nil)!)"
         } else if resultString != "" {
-            return "Dice syntax error"
-        } else { return "" }
+            results = "Dice syntax error"
+        } else { results = "" }
     }
 }

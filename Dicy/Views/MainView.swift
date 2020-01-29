@@ -14,6 +14,7 @@ struct MainView: View {
     @ObservedObject var parser = DiceParser()
     @State var showQuickRoll = true
     @State var showPresets = true
+    @State var textField = ""
     
     var body: some View {
         
@@ -34,7 +35,7 @@ struct MainView: View {
                     Text("Add results")
                 }
                 .padding(.leading)
-                QuickRollView(dicy: dicy)
+                QuickRollView(dicy: dicy, parser: parser)
                     .transition(.scale(scale: 0.001, anchor: .top))
             }
             
@@ -65,10 +66,16 @@ struct MainView: View {
                         }
                         .padding(.trailing)
                         HStack {
-                            TextField("Try typing 3d6", text: $dicy.diceFormula)
+                            TextField("Try typing 3d6", text: $textField, onCommit: {
+                                withAnimation(.spring()) {
+                                self.parser.parseDice(fromString: self.textField)
+                                }
+                            })
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                             Button(action: {
-                                self.dicy.resultString = self.parser.parseDice(fromString: self.dicy.diceFormula)!
+                                withAnimation(.spring()) {
+                                    self.parser.parseDice(fromString: self.textField)
+                                }
                             }) {
                                 Text("Roll")
                             }
@@ -86,19 +93,16 @@ struct MainView: View {
                 
                 HStack {
                     Spacer()
-                    Text(dicy.resultString)
+                    Text(parser.results)
                         .font(.footnote)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(dicy.isResultsEmpty ? Color.gray : Color("TextColor"))
-                        .opacity(dicy.isResultsEmpty ? 0 : 100)
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }
                 HStack {
                     Spacer()
                     Button(action:{
-                        self.dicy.results = []
-                        self.dicy.isResultsEmpty = true
+                        self.parser.results = ""
                     }) {
                         Text("C")
                     }
