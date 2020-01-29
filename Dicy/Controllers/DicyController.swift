@@ -6,7 +6,6 @@
 //  Copyright © 2020 Pedro Simoes. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 
 class DicyController: ObservableObject {

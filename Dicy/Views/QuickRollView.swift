@@ -6,12 +6,10 @@
 //  Copyright © 2020 Pedro Simoes. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
-import Combine
 
 struct QuickRollView: View {
-        
+    
     let dicy:DicyController
     
     var body: some View {
@@ -44,13 +42,16 @@ struct QuickRollButton: View {
     
     var body: some View {
         Button(action: {
-            if self.dicy.addToggleIsPressed == true {
-                self.dicy.results.append(quickRollDice(sides: self.sides))
-            } else {
-                self.dicy.results = [quickRollDice(sides: self.sides)]
+            withAnimation(Animation.spring().speed(5)) {
+                if self.dicy.addToggleIsPressed == true {
+                    self.dicy.results.append(quickRollDice(sides: self.sides))
+                } else {
+                    self.dicy.results = [quickRollDice(sides: self.sides)]
+                }
+                self.dicy.isResultsEmpty = false
+                self.dicy.resultString = "\(self.dicy.results.description) = \(self.dicy.results.reduce(0,+))"
             }
-            self.dicy.isResultsEmpty = false
-            self.dicy.resultString = "\(self.dicy.results.description) = \(self.dicy.results.reduce(0,+))"
+            
         }) {
             Image(image)
         }
