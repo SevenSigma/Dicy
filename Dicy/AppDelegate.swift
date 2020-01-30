@@ -22,12 +22,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Create the window and set the content view. 
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            styleMask: [.titled, .closable, .resizable, .fullSizeContentView, .miniaturizable],
             backing: .buffered, defer: false)
         window.center()
-        window.setFrameAutosaveName("Main Window")
+        window.setFrameAutosaveName("Dicy")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
+        window.title = "Dicy"
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

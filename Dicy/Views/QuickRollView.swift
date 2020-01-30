@@ -11,22 +11,21 @@ import SwiftUI
 struct QuickRollView: View {
     
     let dicy:DicyController
-    let parser:DiceParser
     
     var body: some View {
         
         VStack {
             HStack {
-                QuickRollButton(dicy: dicy, parser: parser, sides: 4, image: "d4")
-                QuickRollButton(dicy: dicy, parser: parser, sides: 6, image: "d6")
-                QuickRollButton(dicy: dicy, parser: parser, sides: 8, image: "d8")
+                QuickRollButton(dicy: dicy, sides: 4, image: "d4")
+                QuickRollButton(dicy: dicy, sides: 6, image: "d6")
+                QuickRollButton(dicy: dicy, sides: 8, image: "d8")
             }
             .buttonStyle(QuickRollButtonStyle())
             .padding(.leading)
             HStack {
-                QuickRollButton(dicy: dicy, parser: parser, sides: 10, image: "d10")
-                QuickRollButton(dicy: dicy, parser: parser, sides: 12, image: "d12")
-                QuickRollButton(dicy: dicy, parser: parser, sides: 20, image: "d20")
+                QuickRollButton(dicy: dicy, sides: 10, image: "d10")
+                QuickRollButton(dicy: dicy, sides: 12, image: "d12")
+                QuickRollButton(dicy: dicy, sides: 20, image: "d20")
             }
             .buttonStyle(QuickRollButtonStyle())
             .padding(.leading)
@@ -38,7 +37,6 @@ struct QuickRollView: View {
 struct QuickRollButton: View {
     
     let dicy:DicyController
-    let parser:DiceParser
     let sides:Int
     let image:String
     
@@ -51,7 +49,7 @@ struct QuickRollButton: View {
                     self.dicy.results = [quickRollDice(sides: self.sides)]
                 }
                 self.dicy.isResultsEmpty = false
-                self.parser.results = "\(self.dicy.results.description) = \(self.dicy.results.reduce(0,+))"
+                self.dicy.resultString = "\(self.dicy.results.description) = \(self.dicy.results.reduce(0,+))"
             }
             
         }) {

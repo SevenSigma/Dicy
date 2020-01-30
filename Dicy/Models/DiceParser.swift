@@ -7,11 +7,8 @@
 //
 
 import Foundation
-class DiceParser:ObservableObject {
     
-    @Published var results:String = ""
-    
-    func parseDice (fromString: String) {
+    func parseDice (fromString: String) -> String {
         
         // Starting variables
         let diceFormula = fromString
@@ -20,6 +17,7 @@ class DiceParser:ObservableObject {
         var detailedResultString = diceFormula
         
         // Setting up the regex
+        // TODO: Implement Arquimago's improved regex (remember to change the diceRange)
         let regexPattern = #"(\d+d\d+)"#
         let rangeOfString = NSRange(location: 0, length: diceFormula.utf16.count)
         let regex = try! NSRegularExpression(pattern: regexPattern, options: [])
@@ -45,7 +43,7 @@ class DiceParser:ObservableObject {
                     numberOfDice = Int(String((dice!.split(separator: "d").first)!))
                     numberOfSides = Int(String((dice!.split(separator: "d").last)!))
                     
-                    // Actually rolls the dice, if there is any to be rolled
+                    // Actually rolls the dice, if there are any to be rolled
                     if numberOfDice != nil && numberOfSides != nil {
                         let dieRolls = rollDice(numberOfDice: numberOfDice!, sides: numberOfSides!)
                         // Creates a string with the detailed dice results
@@ -59,12 +57,12 @@ class DiceParser:ObservableObject {
             }
         }
         print("Detailed results are: \(detailedResultString)")
+        // Transforms the string into a NSExpression, which means any math in the string will be automatically evaluated
         if resultString != "" && resultString != diceFormula {
             let result = NSExpression(format: resultString)
             print("The result math expression is \(result)")
-            results = "\(detailedResultString) = \(result.expressionValue(with: nil, context: nil)!)"
+            return "\(detailedResultString) = \(result.expressionValue(with: nil, context: nil)!)"
         } else if resultString != "" {
-            results = "Dice syntax error"
-        } else { results = "" }
+            return "Dice syntax error"
+        } else { return "" }
     }
-}
