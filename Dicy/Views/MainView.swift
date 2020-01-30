@@ -47,7 +47,6 @@ struct MainView: View {
                                 ForEach(self.dicy.savedPresets) { preset in
                                     Text(preset.id)
                                 }
-
                             }
                             Button(action: {
                                 // Adds a new preset with the current dice formula and the identifier "New Preset"
@@ -95,16 +94,24 @@ struct MainView: View {
                     .font(.subheadline)
                 HStack {
                     Spacer()
-                    Text(dicy.resultString)
+                    if dicy.resultString == ""{
+                        Text("Your results will appear here")
                         .font(.footnote)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
+                            .foregroundColor(Color.gray)
+                    } else {
+                        Text(dicy.resultString)
+                            .font(.footnote)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
                     Spacer()
                 }
                 HStack {
                     Spacer()
                     Button(action:{
                         self.dicy.resultString = ""
+                        self.dicy.results = []
                     }) {
                         Text("C")
                     }

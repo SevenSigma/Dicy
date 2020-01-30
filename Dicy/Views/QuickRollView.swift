@@ -29,7 +29,6 @@ struct QuickRollView: View {
             }
             .buttonStyle(QuickRollButtonStyle())
             .padding(.leading)
-            
         }
     }
 }
