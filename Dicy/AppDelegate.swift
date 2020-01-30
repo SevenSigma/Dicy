@@ -11,6 +11,8 @@ import SwiftUI
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+    
+    let defaults = UserDefaults.standard
 
     var window: NSWindow!
 
@@ -21,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Create the window and set the content view. 
         window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
+            contentRect: NSRect(x: 0, y: 0, width: 0, height: 0),
             styleMask: [.titled, .closable, .resizable, .fullSizeContentView, .miniaturizable],
             backing: .buffered, defer: false)
         window.center()
@@ -33,8 +35,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+        
+
     }
 
-
 }
-

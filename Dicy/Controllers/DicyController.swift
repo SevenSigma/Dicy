@@ -19,9 +19,13 @@ class DicyController: ObservableObject {
     @Published var savedPresets:[Preset] = []
     
     init() {
-        savedPresets = [
-        Preset(id: "Attack roll", diceFormula: "1d20+4"),
-        Preset(id: "Sneak Attack damage", diceFormula: "3d6")
-        ]
+        if let presetsFromUserDefaults = readPresetsFromUserDefaults() {
+            savedPresets = presetsFromUserDefaults
+        } else {
+            savedPresets = [
+                Preset(id: "Attack roll", diceFormula: "1d20+4"),
+                Preset(id: "Sneak Attack damage", diceFormula: "3d6")
+            ]
+        }
     }
 }

@@ -15,6 +15,7 @@ struct MainView: View {
     @State var showPresets = true
     @State var textField = ""
     @State var selectedPreset = ""
+    let defaults = UserDefaults.standard
     
     var body: some View {
         
@@ -41,7 +42,7 @@ struct MainView: View {
                     VStack {
                         HStack {
                             
-                            // TODO: Implement the picker
+                            // TODO: Make the current selected preset fill the Dice Formula text field
                             Picker(selection: $selectedPreset, label:EmptyView()) {
                                 ForEach(self.dicy.savedPresets) { preset in
                                     Text(preset.id)
@@ -49,12 +50,18 @@ struct MainView: View {
 
                             }
                             Button(action: {
-                                self.dicy.savedPresets.append(Preset(id: "New preset", diceFormula: self.textField) )
+                                // Adds a new preset with the current dice formula and the identifier "New Preset"
+                                // TODO: Pop up an alert to fill both the id and the dice formula
+                                let newPreset = Preset(id: "New preset", diceFormula: self.textField)
+                                self.dicy.savedPresets.append(newPreset)
+                                savePresetsToUserDefaults(presets: self.dicy.savedPresets)
                             }) {
                                 Text("+")
                             }
                             Button(action: {
-                                
+                                // Removes the currently selected preset
+                                self.dicy.savedPresets = self.dicy.savedPresets.filter({ return $0.id != self.selectedPreset })
+                                savePresetsToUserDefaults(presets: self.dicy.savedPresets)
                             }) {
                                 Text("-")
                             }
