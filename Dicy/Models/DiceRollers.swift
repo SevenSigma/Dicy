@@ -22,6 +22,7 @@ func rollDice (numberOfDice:Int, sides:Int) -> [Int] {
         return results
 }
 
+// Simplified dice formula for the most common dice
 func quickRollDice (sides:Int) -> Int {
     let dieRoll = Int.random(in: 1...sides)
     return dieRoll

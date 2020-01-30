@@ -21,7 +21,7 @@ struct MainView: View {
         
         VStack(alignment: .leading) {
             
-            // Quick Roll View
+            // MARK: Quick Roll View
             Text("Quick Roll")
                 .font(.subheadline)
                 .padding([.top, .leading])
@@ -34,7 +34,7 @@ struct MainView: View {
                     .transition(.scale(scale: 0.001, anchor: .top))
             }
             
-            // Presets View
+            // MARK: Presets View
             VStack(alignment: .leading) {
                 Text("Presets")
                     .font(.subheadline)
@@ -89,7 +89,7 @@ struct MainView: View {
             }
             .padding(.leading)
             
-            // Results View
+            // MARK: Results View
             VStack(alignment: .leading) {
                 Text("Results")
                     .font(.subheadline)

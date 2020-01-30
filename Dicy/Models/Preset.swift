@@ -13,14 +13,12 @@ struct Preset: Identifiable, Codable {
     let diceFormula: String
 }
 
-// TODO: Implement the read and save preset functions
 func savePresetsToUserDefaults(presets: [Preset]) {
     // Convert an array of presets into JSON data, then saves the data to UserDefaults.plist
     let encoder = JSONEncoder()
     if let encoded = try? encoder.encode(presets) {
         UserDefaults.standard.set(encoded, forKey: "presets")
     }
-
 }
 
 func readPresetsFromUserDefaults() -> [Preset]? {

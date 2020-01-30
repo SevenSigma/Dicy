@@ -51,7 +51,6 @@ struct QuickRollButton: View {
                 self.dicy.isResultsEmpty = false
                 self.dicy.resultString = "\(self.dicy.results.description) = \(self.dicy.results.reduce(0,+))"
             }
-            
         }) {
             Image(image)
         }
