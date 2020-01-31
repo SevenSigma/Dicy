@@ -13,6 +13,7 @@ struct MainView: View {
     @ObservedObject var dicy = DicyController()
     @State var textField = ""
     @State var selectedPreset = ""
+    @State var showingPresetView = false
     
     var body: some View {
         
@@ -39,19 +40,17 @@ struct MainView: View {
                                 Text(preset.id)
                             }
                         }
-                        .onReceive(dicy.publisher, perform: {
-                            let newChosenPreset = $0
+                        .onReceive(dicy.publisher, perform: { _ in
                             let chosenPresetDiceFormula = self.dicy.savedPresets.filter({ return $0.id == self.dicy.selectedPreset })
                             self.textField = chosenPresetDiceFormula[0].diceFormula
                         })
                         Button(action: {
-                            // Adds a new preset with the current dice formula and the identifier "New Preset"
-                            // TODO: Pop up an alert to fill both the id and the dice formula
-                            let newPreset = Preset(id: "New preset", diceFormula: self.textField)
-                            self.dicy.savedPresets.append(newPreset)
-                            savePresetsToUserDefaults(presets: self.dicy.savedPresets)
+                            // Shows the Add New Preset sheet
+                            self.showingPresetView.toggle()
                         }) {
                             Text("+")
+                        } .sheet(isPresented: $showingPresetView) {
+                            PresetView(dicy: self.dicy, showPresetView: self.$showingPresetView)
                         }
                         Button(action: {
                             // Removes the currently selected preset
@@ -111,7 +110,6 @@ struct MainView: View {
         .frame(width: 390.0)
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

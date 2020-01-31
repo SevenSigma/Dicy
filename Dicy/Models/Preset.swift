@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Preset: Identifiable, Codable {
+struct Preset: Identifiable, Codable, Equatable {
     let id: String
     let diceFormula: String
 }
