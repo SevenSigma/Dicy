@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct QuickRollView: View {
     
@@ -41,15 +42,12 @@ struct QuickRollButton: View {
     
     var body: some View {
         Button(action: {
-            withAnimation(Animation.spring().speed(5)) {
-                if self.dicy.addToggleIsPressed == true {
-                    self.dicy.results.append(quickRollDice(sides: self.sides))
-                } else {
-                    self.dicy.results = [quickRollDice(sides: self.sides)]
-                }
-                self.dicy.isResultsEmpty = false
-                self.dicy.resultString = "\(self.dicy.results.description) = \(self.dicy.results.reduce(0,+))"
+            if self.dicy.addToggleIsPressed == true {
+                self.dicy.results.append(quickRollDice(sides: self.sides))
+            } else {
+                self.dicy.results = [quickRollDice(sides: self.sides)]
             }
+            self.dicy.resultString = "\(self.dicy.results.description) = \(self.dicy.results.reduce(0,+))"
         }) {
             Image(image)
         }
@@ -62,6 +60,6 @@ struct QuickRollButtonStyle: ButtonStyle {
         configuration.label
             .opacity(configuration.isPressed ? 0.5 : 1.0)
             .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
-            .animation(Animation.spring().speed(5))
+            .animation(Animation.spring().speed(4))
     }
 }

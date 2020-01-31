@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 class DicyController: ObservableObject {
     
@@ -14,11 +15,17 @@ class DicyController: ObservableObject {
     
     @Published var results:[Int] = []
     @Published var addToggleIsPressed:Bool = false
-    @Published var isResultsEmpty:Bool = false
     @Published var resultString:String = ""
     @Published var savedPresets:[Preset] = []
     
+    let publisher = PassthroughSubject<String, Never>()
+    var diceValue: String {
+        willSet { objectWillChange.send() }
+        didSet { publisher.send(diceValue) }
+    }
+    
     init() {
+        self.diceValue = ""
         if let presetsFromUserDefaults = readPresetsFromUserDefaults() {
             savedPresets = presetsFromUserDefaults
         } else {

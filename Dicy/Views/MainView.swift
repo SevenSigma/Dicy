@@ -11,11 +11,8 @@ import SwiftUI
 struct MainView: View {
     
     @ObservedObject var dicy = DicyController()
-    @State var showQuickRoll = true
-    @State var showPresets = true
     @State var textField = ""
     @State var selectedPreset = ""
-    let defaults = UserDefaults.standard
     
     var body: some View {
         
@@ -25,64 +22,61 @@ struct MainView: View {
             Text("Quick Roll")
                 .font(.subheadline)
                 .padding([.top, .leading])
-            if showQuickRoll == true {
-                Toggle(isOn: $dicy.addToggleIsPressed) {
-                    Text("Add results")
-                }
-                .padding(.leading)
-                QuickRollView(dicy: dicy)
-                    .transition(.scale(scale: 0.001, anchor: .top))
+            Toggle(isOn: $dicy.addToggleIsPressed) {
+                Text("Add results")
             }
+            .padding(.leading)
+            QuickRollView(dicy: dicy)
             
             // MARK: Presets View
             VStack(alignment: .leading) {
                 Text("Presets")
                     .font(.subheadline)
-                if showPresets == true {
-                    VStack {
-                        HStack {
-                            
-                            // TODO: Make the current selected preset fill the Dice Formula text field
-                            Picker(selection: $selectedPreset, label:EmptyView()) {
-                                ForEach(self.dicy.savedPresets) { preset in
-                                    Text(preset.id)
-                                }
-                            }
-                            Button(action: {
-                                // Adds a new preset with the current dice formula and the identifier "New Preset"
-                                // TODO: Pop up an alert to fill both the id and the dice formula
-                                let newPreset = Preset(id: "New preset", diceFormula: self.textField)
-                                self.dicy.savedPresets.append(newPreset)
-                                savePresetsToUserDefaults(presets: self.dicy.savedPresets)
-                            }) {
-                                Text("+")
-                            }
-                            Button(action: {
-                                // Removes the currently selected preset
-                                self.dicy.savedPresets = self.dicy.savedPresets.filter({ return $0.id != self.selectedPreset })
-                                savePresetsToUserDefaults(presets: self.dicy.savedPresets)
-                            }) {
-                                Text("-")
+                VStack {
+                    HStack {
+                        
+                        // TODO: Make the current selected preset fill the Dice Formula text field
+                        Picker(selection: $selectedPreset, label:EmptyView()) {
+                            ForEach(self.dicy.savedPresets) { preset in
+                                Text(preset.id)
                             }
                         }
-                        .padding(.trailing)
-                        HStack {
-                            TextField("Try typing 3d6", text: $textField, onCommit: {
-                                withAnimation(.spring()) {
-                                    self.dicy.resultString = parseDice(fromString: self.textField)
-                                }
-                            })
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
-                            Button(action: {
-                                withAnimation(.spring()) {
-                                    self.dicy.resultString = parseDice(fromString: self.textField)
-                                }
-                            }) {
-                                Text("Roll")
+                        
+                        
+                        Picker(selection: $selectedPreset, label:EmptyView()) {
+                            ForEach(self.dicy.savedPresets) { preset in
+                                Text(preset.id)
                             }
-                            .padding([.trailing])
                         }
+                        Button(action: {
+                            // Adds a new preset with the current dice formula and the identifier "New Preset"
+                            // TODO: Pop up an alert to fill both the id and the dice formula
+                            let newPreset = Preset(id: "New preset", diceFormula: self.textField)
+                            self.dicy.savedPresets.append(newPreset)
+                            savePresetsToUserDefaults(presets: self.dicy.savedPresets)
+                        }) {
+                            Text("+")
+                        }
+                        Button(action: {
+                            // Removes the currently selected preset
+                            self.dicy.savedPresets = self.dicy.savedPresets.filter({ return $0.id != self.selectedPreset })
+                            savePresetsToUserDefaults(presets: self.dicy.savedPresets)
+                        }) {
+                            Text("-")
+                        }
+                    }
+                    .padding(.trailing)
+                    HStack {
+                        TextField("Try typing 3d6", text: $textField, onCommit: {
+                            self.dicy.resultString = parseDice(fromString: self.textField)
+                        })
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        Button(action: {
+                            self.dicy.resultString = parseDice(fromString: self.textField)
+                        }) {
+                            Text("Roll")
+                        }
+                        .padding([.trailing])
                     }
                 }
             }
@@ -94,17 +88,16 @@ struct MainView: View {
                     .font(.subheadline)
                 HStack {
                     Spacer()
-                    if dicy.resultString == ""{
-                        Text("Your results will appear here")
-                        .font(.footnote)
-                            .foregroundColor(Color.gray)
+                    if dicy.resultString == "" {
+                        Text("Your dice rolls will appear here")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
                     } else {
                         Text(dicy.resultString)
                             .font(.footnote)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
                     }
-
                     Spacer()
                 }
                 HStack {

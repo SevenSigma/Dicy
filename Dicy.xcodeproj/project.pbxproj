@@ -12,6 +12,7 @@
 		6B18DEC123C8134200795989 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B18DEC023C8134200795989 /* Assets.xcassets */; };
 		6B18DEC423C8134200795989 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B18DEC323C8134200795989 /* Preview Assets.xcassets */; };
 		6B18DEC723C8134200795989 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B18DEC523C8134200795989 /* Main.storyboard */; };
+		6B52901223E3D7220070B1C3 /* DiceText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B52901123E3D7220070B1C3 /* DiceText.swift */; };
 		6BC050E923E33D6900879333 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC050E823E33D6900879333 /* Preset.swift */; };
 		6BC2047323CD0D7D0069718E /* DiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC2047223CD0D7D0069718E /* DiceParser.swift */; };
 		6BC2047523CD0D940069718E /* DiceRollers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC2047423CD0D940069718E /* DiceRollers.swift */; };
@@ -28,6 +29,7 @@
 		6B18DEC623C8134200795989 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6B18DEC823C8134200795989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B18DEC923C8134200795989 /* Dicy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dicy.entitlements; sourceTree = "<group>"; };
+		6B52901123E3D7220070B1C3 /* DiceText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceText.swift; sourceTree = "<group>"; };
 		6BC050E823E33D6900879333 /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
 		6BC2047223CD0D7D0069718E /* DiceParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceParser.swift; sourceTree = "<group>"; };
 		6BC2047423CD0D940069718E /* DiceRollers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceRollers.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				6BC2047223CD0D7D0069718E /* DiceParser.swift */,
 				6BC2047423CD0D940069718E /* DiceRollers.swift */,
+				6B52901123E3D7220070B1C3 /* DiceText.swift */,
 				6BC050E823E33D6900879333 /* Preset.swift */,
 			);
 			path = Models;
@@ -187,6 +190,7 @@
 				6BC2047523CD0D940069718E /* DiceRollers.swift in Sources */,
 				6BC2047323CD0D7D0069718E /* DiceParser.swift in Sources */,
 				6BEADD9F23E10B340098ABC0 /* QuickRollView.swift in Sources */,
+				6B52901223E3D7220070B1C3 /* DiceText.swift in Sources */,
 				6BEADD9D23E105CC0098ABC0 /* DicyController.swift in Sources */,
 				6B18DEBF23C8134100795989 /* MainView.swift in Sources */,
 				6B18DEBD23C8134100795989 /* AppDelegate.swift in Sources */,
