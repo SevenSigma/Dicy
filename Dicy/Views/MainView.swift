@@ -34,20 +34,16 @@ struct MainView: View {
                     .font(.subheadline)
                 VStack {
                     HStack {
-                        
-                        // TODO: Make the current selected preset fill the Dice Formula text field
-                        Picker(selection: $selectedPreset, label:EmptyView()) {
+                        Picker(selection: $dicy.selectedPreset, label:EmptyView()) {
                             ForEach(self.dicy.savedPresets) { preset in
                                 Text(preset.id)
                             }
                         }
-                        
-                        
-                        Picker(selection: $selectedPreset, label:EmptyView()) {
-                            ForEach(self.dicy.savedPresets) { preset in
-                                Text(preset.id)
-                            }
-                        }
+                        .onReceive(dicy.publisher, perform: {
+                            let newChosenPreset = $0
+                            let chosenPresetDiceFormula = self.dicy.savedPresets.filter({ return $0.id == self.dicy.selectedPreset })
+                            self.textField = chosenPresetDiceFormula[0].diceFormula
+                        })
                         Button(action: {
                             // Adds a new preset with the current dice formula and the identifier "New Preset"
                             // TODO: Pop up an alert to fill both the id and the dice formula
@@ -59,7 +55,7 @@ struct MainView: View {
                         }
                         Button(action: {
                             // Removes the currently selected preset
-                            self.dicy.savedPresets = self.dicy.savedPresets.filter({ return $0.id != self.selectedPreset })
+                            self.dicy.savedPresets = self.dicy.savedPresets.filter({ return $0.id != self.dicy.selectedPreset })
                             savePresetsToUserDefaults(presets: self.dicy.savedPresets)
                         }) {
                             Text("-")

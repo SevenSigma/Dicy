@@ -19,13 +19,13 @@ class DicyController: ObservableObject {
     @Published var savedPresets:[Preset] = []
     
     let publisher = PassthroughSubject<String, Never>()
-    var diceValue: String {
+    var selectedPreset: String {
         willSet { objectWillChange.send() }
-        didSet { publisher.send(diceValue) }
+        didSet { publisher.send(selectedPreset) }
     }
     
     init() {
-        self.diceValue = ""
+        self.selectedPreset = ""
         if let presetsFromUserDefaults = readPresetsFromUserDefaults() {
             savedPresets = presetsFromUserDefaults
         } else {
